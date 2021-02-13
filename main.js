@@ -8,19 +8,25 @@ function submitIssue(e)
   const assignedTo = getInputValue('issueAssignedTo');
   const id = Math.floor(Math.random() * 100000000) + '';
   const status = 'Open';
-
-  const issue = { id, description, severity, assignedTo, status };
-  let issues = [];
-  if (localStorage.getItem('issues'))
+  if (isNaN(description) && isNaN(assignedTo))
   {
-    issues = JSON.parse(localStorage.getItem('issues'));
-  }
-  issues.push(issue);
-  localStorage.setItem('issues', JSON.stringify(issues));
+    const issue = { id, description, severity, assignedTo, status };
+    let issues = [];
+    if (localStorage.getItem('issues'))
+    {
+      issues = JSON.parse(localStorage.getItem('issues'));
+    }
+    issues.push(issue);
+    localStorage.setItem('issues', JSON.stringify(issues));
 
-  document.getElementById('issueInputForm').reset();
-  fetchIssues();
-  e.preventDefault();
+    document.getElementById('issueInputForm').reset();
+    fetchIssues();
+    e.preventDefault();
+  }
+  else
+  {
+    alert('Please fill up the form first.');
+  }
 }
 
 const closeIssue = id =>
